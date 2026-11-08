@@ -7,3 +7,7 @@ geiaaaaaaaa
 Εκανα add όλα τα αρχέια του Open GL, εαν το κάνετε clone δεν θα τρέξει λογικά (μελλοντικό πρόβλημα). 
 Προς το παρόν θα κάνω μόνο αλλαγές στο 04_03_Doua_VAO_EN.cpp οπότε να κάνετε copy τον κώδικα και paste στο template που το τρέχουμε συνήθως
 Ότι αλλαγή κάνω θα τη βάζω στο readme και  θα έχω και comments. AYTAAAAAAAA
+
+
+το vision 
+<img width="1850" height="1060" alt="image" src="https://github.com/user-attachments/assets/c3c59585-0033-44fa-b6b0-eec733c83b5b" />
