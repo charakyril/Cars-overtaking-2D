@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OpenGL Template GLUT/OpenGL Template GLUT.vcxproj" Id="b9b1c610-cdde-566e-c9fa-8ae0758d4b89" />
+</Solution>
