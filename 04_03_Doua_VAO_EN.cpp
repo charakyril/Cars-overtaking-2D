@@ -162,59 +162,17 @@ void CreateVAO(void)
 		240.0f, -910.0f, 0.0f, 1.0f, 0.6f, 0.0f, 0.0f, 1.0f, 1.0f,
 		220.0f, -910.0f, 0.0f, 1.0f, 0.4f, 0.0f, 0.0f, 0.0f, 1.0f,
 		
-		-400.0f, -500.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-400.0f, 500.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		 400.0f, -500.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		 400.0f, 500.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		//fyta -- ua fygei 
-		-380.0f, 420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, 420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, 480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, 480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-380.0f, 220.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, 220.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, 280.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, 280.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-380.0f, 40.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, 40.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, 100.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, 100.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-380.0f, -140.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, -140.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, -80.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, -80.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-380.0f, -320.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, -320.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, -260.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, -260.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-380.0f, -480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		-320.0f, -480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		-320.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		-380.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, 420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, 420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, 480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, 480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, 220.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, 220.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, 280.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, 280.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, 40.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, 40.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, 100.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, 100.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, -140.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, -140.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, -80.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, -80.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, -320.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, -320.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, -260.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, -260.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		380.0f, -480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-		320.0f, -480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		320.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-		380.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		
+		-400.0f, -500.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+		-400.0f, 500.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+		 400.0f, -500.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+		 400.0f, 500.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+
+		 
+		 -390.0f, 420.0f, 0.0f, 1.0f, 0.55f, 0.0f, 0.1f, 0.0f, 0.0f,
+		 -310.0f, 420.0f, 0.0f, 1.0f, 0.55f, 0.0f, 0.1f, 1.0f, 0.0f,
+		 -310.0f, 480.0f, 0.0f, 1.0f, 0.55f, 0.0f, 0.1f, 1.0f, 1.0f,
+		 -390.0f, 480.0f, 0.0f, 1.0f, 0.55f, 0.0f, 0.1f, 0.0f, 1.0f,
 		
 	};
 
@@ -234,17 +192,6 @@ void CreateVAO(void)
 		38, 0, 3, 39,
 		1, 40, 41, 2,
 		42, 43, 44, 45,
-		46, 47, 48, 49,
-		50, 51, 52, 53,
-		54, 55, 56, 57,
-		58, 59, 60, 61,
-		62, 63, 64, 65,
-		66, 67, 68, 69,
-		70, 71, 72, 73,
-		74, 75, 76, 77,
-		78, 79, 80, 81,
-		82, 83, 84, 85,
-		86, 87, 88, 89,
 	};
 
 	//  The first VAO (Vertex Array Object) is created / bound;
@@ -401,8 +348,8 @@ void Initialize(void)
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);		//  Background color of the screen;
 
 	//  Passing the rendering data to the buffer used by the shaders;
-	CreateVAO();  // CreateVBO();
-	//CreateVAO2();
+	CreateVAO();  
+
 
 	LoadTexture("car1.png", "McQueen.png", "car2.png", "car3.png");
 
@@ -448,7 +395,7 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	// σχεδιάζουμε τον δρόμο 
-	glLineWidth(6.0);
+	glLineWidth(20.0);
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, 0);
 	glDrawElements(GL_LINES, 4, GL_UNSIGNED_INT, (GLvoid*)(2 * sizeof(GLuint)));
 	glLineWidth(2.0);
@@ -460,6 +407,29 @@ void RenderFunction(void)
 
 	//έξω απο τον δρόμο 
 	glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLuint)));
+
+	//κόκκινες λωρίδες
+	codCol = 3; 
+	codColLocation = glGetUniformLocation(ProgramId, "codCol");
+	glUniform1i(codColLocation, codCol);
+
+	float positionsY[6] = { 0.0f, -180.0f, -360.0f, -540.0f, -720.0f, -900.0f };
+
+	for (int i = 0; i < 6; i++) {
+		// Αριστερή πλευρά (side = 0)
+		glm::mat4 stripeTranslation1 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, positionsY[i], 0.0f));
+		myMatrix = scaleMatrix * stripeTranslation1;
+		glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+		glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(46 * sizeof(GLuint)));
+
+		// Δεξιά πλευρά (side = 1)
+		glm::mat4 stripeTranslation2 = glm::translate(glm::mat4(1.0f), glm::vec3(700.0f, positionsY[i], 0.0f));
+		myMatrix = scaleMatrix * stripeTranslation2;
+		glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+		glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(46 * sizeof(GLuint)));
+	}
+		
+	
 
 	codCol = 1;
 	codColLocation = glGetUniformLocation(ProgramId, "codCol");
