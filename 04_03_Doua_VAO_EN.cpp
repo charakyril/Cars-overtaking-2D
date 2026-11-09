@@ -13,8 +13,6 @@
 #include <windows.h>        //	Use of Windows system functions (creating windows, handling files and directories);
 #include <stdlib.h>         //  Libraries needed for reading the shaders;
 #include <stdio.h>
-#include <math.h> 
-#include <iostream> 
 #include <GL/glew.h>        //  Defines the OpenGL function prototypes and the constants needed for modern OpenGL programming;
 #include <GL/freeglut.h>    //	Includes functions for:
 							//	- managing windows and keyboard and mouse events,
@@ -35,7 +33,6 @@ ColorBufferId,
 EboId,
 ProgramId,
 myMatrixLocation,
-//myRotationLocation,
 codCol,
 codColLocation;
 
@@ -368,15 +365,15 @@ void RenderFunction(void)
 	
 	//μετακίνηση του αργού,γρηγορου, αντιθετου αυτοκινήτου 
 	slowCarTranslation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, slowCarsetY, 0.0));
-
+	//μετακίνηση του Mcqueen 
 	fastCarTranslation = glm::translate(glm::mat4(1.0f), glm::vec3(fastCarsetX, fastCarsetY, 0.0));
-
+	//μετακίνηση των αντίθετων
 	oncomingCarTranslation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, oncomingCarssetY, 0.0));
-
+	//rotating / allagh gwnias 
 	fastCarRotation = rotate(glm::mat4(1.0f), fastAngle, glm::vec3(0.0, 0.0, 1.0));
-
+	//allagh kentrou
 	fastCarOrigin = glm::translate(glm::mat4(1.0f), glm::vec3(-fastCarCenterX, -fastCarCenterY, 0.0));
-
+	// epistrofh sthn arxikh thesh 
 	fastCarBackCenter = glm::translate(glm::mat4(1.0f), glm::vec3(fastCarCenterX, fastCarCenterY, 0.0));
 
 	glClear(GL_COLOR_BUFFER_BIT);			//  The OpenGL screen is cleared so that the new content can be drawn;
