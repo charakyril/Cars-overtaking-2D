@@ -16,18 +16,17 @@ geiaaaaaaaa
 
 τι έχω κάνει 
 
-<img width="926" height="1118" alt="Στιγμιότυπο οθόνης 2026-11-09 215930" src="https://github.com/user-attachments/assets/496540e1-5ecb-43cf-a10a-b2e2c5d535e1" />
+<img width="852" height="1126" alt="Στιγμιότυπο οθόνης 2026-11-09 215856" src="https://github.com/user-attachments/assets/8cd3f7d5-594b-4d37-837f-bba4ccfd92fa" />
 
 
-
-<img width="1008" height="1112" alt="Στιγμιότυπο οθόνης 2026-11-09 215922" src="https://github.com/user-attachments/assets/744508f3-d9b7-461d-b9dc-28fe30b3589c" />
-
+<img width="884" height="1138" alt="Στιγμιότυπο οθόνης 2026-11-09 215913" src="https://github.com/user-attachments/assets/38f653d8-9458-4e41-a7a6-9e6eb8123c5a" />
 
 
-<img width="884" height="1138" alt="Στιγμιότυπο οθόνης 2026-11-09 215913" src="https://github.com/user-attachments/assets/db2b857a-601f-4aca-b066-23d27b3324ab" />
+<img width="1008" height="1112" alt="Στιγμιότυπο οθόνης 2026-11-09 215922" src="https://github.com/user-attachments/assets/ac5f92e5-f1a6-4172-a5e0-187079e3b43d" />
 
 
-<img width="852" height="1126" alt="Στιγμιότυπο οθόνης 2026-11-09 215856" src="https://github.com/user-attachments/assets/f508ea0c-581a-42e6-8020-4d1567389168" />
+<img width="926" height="1118" alt="Στιγμιότυπο οθόνης 2026-11-09 215930" src="https://github.com/user-attachments/assets/465e89ea-c0fd-4896-b0bb-2aa20e4193ea" />
+
 
 
 
