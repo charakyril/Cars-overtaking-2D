@@ -13,8 +13,8 @@
 #include <windows.h>        //	Use of Windows system functions (creating windows, handling files and directories);
 #include <stdlib.h>         //  Libraries needed for reading the shaders;
 #include <stdio.h>
-//#include <math.h> 
-//#include <iostream> 
+#include <math.h> 
+#include <iostream> 
 #include <GL/glew.h>        //  Defines the OpenGL function prototypes and the constants needed for modern OpenGL programming;
 #include <GL/freeglut.h>    //	Includes functions for:
 							//	- managing windows and keyboard and mouse events,
@@ -34,7 +34,9 @@ VboId,                       // Each VAO will contain its own buffers for coordi
 ColorBufferId,
 EboId,
 ProgramId,
-myMatrixLocation;
+myMatrixLocation,
+codCol,
+codColLocation;
 //	Size of the display window;
 GLfloat
 winWidth = 400, winHeight = 500;
@@ -75,11 +77,11 @@ int driving_straight = 1;	// 1= eutheia, 0 = allagh lvridas
 
 void UpdatePositions() {
 	slowCarsetY += 0.07f;
-	fastCarsetY += 0.015;	//grhgorh kinhsh gia prosperash 
+	fastCarsetY += 0.015f;	//grhgorh kinhsh gia prosperash 
 
 	oncomingCarssetY -= 0.07f;
 	slowCarMinY += 0.07f;
-	slowCarMaxY += 0.07;
+	slowCarMaxY += 0.07f;
 	fastCarMinY += 0.15f;
 	fastCarMaxY += 0.15f;
 
@@ -386,6 +388,7 @@ void DestroyVBO(void)
 //ΦΩΤΟΓΡΑΦΙΕΣ
 void LoadTexture(void) {
 
+
 }
 
 //  The function that releases the resources allocated by the program;
@@ -476,6 +479,46 @@ void RenderFunction(void)
 	if (slowCarMinY > 500.0f) {
 		resetOvertaking();
 	}
+
+	codCol = 0; 
+	codColLocation = glGetUniformLocation(ProgramId, "codCol");
+	glUniform1i(codColLocation, codCol);
+
+	myMatrix = scaleMatrix;
+	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
+	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+
+	// σχεδιάζουμε τον δρόμο 
+	glLineWidth(6.0);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_LINES, 4, GL_UNSIGNED_INT, (GLvoid*)(2 * sizeof(GLfloat)));
+	glLineWidth(2.0);
+	glDrawElements(GL_LINES, 12, GL_UNSIGNED_INT, (GLvoid*)(6 * sizeof(GLfloat)));
+	 
+	codCol = 2;
+	codColLocation = glGetUniformLocation(ProgramId, "codCol");
+	glUniform1i(codColLocation, codCol);
+
+	//έξω απο τον δρόμο 
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLfloat)));
+
+	codCol = 1;
+	codColLocation = glGetUniformLocation(ProgramId, "codCol");
+	glUniform1i(codColLocation, codCol);
+
+	myMatrix = scaleMatrix;
+	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
+	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
+
+	// υφή για τα φυτά
+	glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, texture5);
+	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
+
+	// τα φυτά στον πράσινο χώρο 
+	glDrawElements(GL_QUADS, 48, GL_UNSIGNED_INT, (GLvoid*)(46 * sizeof(GLfloat)));
+
+	////////
 
 	//το αργό αυτοκίνητο 
 	glActiveTexture(GL_TEXTURE0);
