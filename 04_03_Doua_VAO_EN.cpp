@@ -25,7 +25,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
- 
+#include "SOIL.h"
 
 //  Identifiers of the OpenGL objects;
 GLuint
@@ -35,14 +35,18 @@ ColorBufferId,
 EboId,
 ProgramId,
 myMatrixLocation,
+//myRotationLocation,
 codCol,
 codColLocation;
+
+GLuint slowCarTexture, fastCarTexture, oncomingCar1Texture, oncomingCar2Texture;
+
 //	Size of the display window;
 GLfloat
 winWidth = 400, winHeight = 500;
 //	Variables for the transformation matrices;
 glm::mat4
-myMatrix, scaleMatrix, resizeMatrix, slowCarTranslation, fastCarTranslation, oncomingCarTranslation, fastCarRotation,
+myMatrix, scaleMatrix, slowCarTranslation, fastCarTranslation, oncomingCarTranslation, fastCarRotation,
 fastCarOrigin, fastCarBackCenter;
 //myMatrix -> τελικός πίνακας του shader
 // resizeMatrix -> φέρνει την σκηνή στο -1,1
@@ -54,7 +58,7 @@ fastCarOrigin, fastCarBackCenter;
 // fastCarBackCenter-> επαναφορά στη θέση του 
 // 
 //	Variables for the orthogonal projection;
-float xMin = -400.f, xMax = 400.f, yMin = -500.f, yMax = 500.f;
+//float xMin = -400.f, xMax = 400.f, yMin = -500.f, yMax = 500.f;
 
 float slowCarsetY = 0.0f;	// argo autokinhto ston ajona y
 float fastCarsetY = 0.0f;	//grhgoro ston ajona y
@@ -77,7 +81,7 @@ int driving_straight = 1;	// 1= eutheia, 0 = allagh lvridas
 
 void UpdatePositions() {
 	slowCarsetY += 0.07f;
-	fastCarsetY += 0.015f;	//grhgorh kinhsh gia prosperash 
+	fastCarsetY += 0.15f;	//grhgorh kinhsh gia prosperash 
 
 	oncomingCarssetY -= 0.07f;
 	slowCarMinY += 0.07f;
@@ -216,28 +220,9 @@ void CreateVAO(void)
 		320.0f, -480.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		320.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 		380.0f, -420.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		// flas - tha fugei 
-		225.0f, -875.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.2f, 0.0f, 0.0f,
-		235.0f, -875.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.8f, 1.0f, 0.0f,
-		235.0f, -865.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.8f, 1.0f, 1.0f,
-		225.0f, -865.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.8f, 0.0f, 1.0f,
+		
 	};
 
-	//	Colors as vertex attributes (one per vertex);
-	//static const GLfloat Colors1[] =
-	//{
-		// walls - sand
-		//0.9f, 0.8f, 0.5f, 1.0f,
-		//0.9f, 0.8f, 0.5f, 1.0f,
-		//0.9f, 0.8f, 0.5f, 1.0f,
-		//0.9f, 0.8f, 0.5f, 1.0f,
-		
-		// door - brown
-//		0.4f, 0.2f, 0.1f, 1.0f,
-//		0.4f, 0.2f, 0.1f, 1.0f,
-	//	0.4f, 0.2f, 0.1f, 1.0f,
-		//0.4f, 0.2f, 0.1f, 1.0f
-	//};
 
 	//	Indices giving the drawing order (triangles);
 	static const GLuint Indices[] =
@@ -279,7 +264,7 @@ void CreateVAO(void)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);      //  The points are "copied" into the current buffer;
 	//  The attribute (0 = coordinates) is associated for the shader;
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)0);
 
 	//  A buffer for the COLOR is created;
 	//glGenBuffers(1, &ColorBufferId1);
@@ -287,10 +272,10 @@ void CreateVAO(void)
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(Colors1), Colors1, GL_STATIC_DRAW);
 	//  The attribute (1 = color) is associated for the shader;
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)(4 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)(4 * sizeof(GLfloat)));
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)(7 * sizeof(GLfloat)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (GLvoid*)(7 * sizeof(GLfloat)));
 
 	//	A buffer for the INDICES is created;
 	glGenBuffers(1, &EboId);														//  Generating the buffer and assigning its index to the EboId1 variable;
@@ -299,62 +284,6 @@ void CreateVAO(void)
 
 }
 
-// The second VAO is created - drawing a pentagon in shades of gray
-//void CreateVAO2(void)
-//{
-
-	//  Vertex coordinates;
-	//static const GLfloat Vertices2[] =
-//	{
-	//	// walls (square)
-//60.0f, 40.0f, 0.0f, 1.0f,   // 0
-//		20.0f, 40.0f, 0.0f, 1.0f,   // 1
-	//	20.0f,   0.0f, 0.0f, 1.0f,   // 2
-	//	60.0f,   0.0f, 0.0f, 1.0f,   // 3
-	//};
-
-	//	Colors as vertex attributes (one per vertex);
-	//static const GLfloat Colors2[] =
-	//{
-		//0.9f, 0.9f, 0.5f, 1.0f,
-		//0.9f, 0.3f, 0.5f, 1.0f,
-		//0.9f, 0.0f, 0.2f, 1.0f,
-		//0.9f, 0.8f, 0.5f, 1.0f
-	//};
-
-	//	Indices giving the drawing order (triangles);
-//	static const GLuint Indices2[] =
-	//{
-		//0, 1, 2,   0, 2, 3,     // trunk
-		//4, 5, 6,                // lower foliage
-		//7, 8, 9                 // upper foliage
-	//};
-
-	//  The second VAO (Vertex Array Object) is created / bound;
-	//glGenVertexArrays(1, &VaoId2);         //  Generating the VAO and assigning its index to the VaoId2 variable;
-	//glBindVertexArray(VaoId2);
-
-	//  A buffer for the VERTICES is created;
-	//glGenBuffers(1, &VboId2);                                                        //  Generating the buffer and assigning its index to the VboId2 variable;
-	//glBindBuffer(GL_ARRAY_BUFFER, VboId2);                                           //  Setting the buffer type - vertex attributes;
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices2), Vertices2, GL_STATIC_DRAW);
-	//  The attribute (0 = coordinates) is associated for the shader;
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//  A buffer for the COLOR is created;
-	//glGenBuffers(1, &ColorBufferId2);
-	//glBindBuffer(GL_ARRAY_BUFFER, ColorBufferId2);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(Colors2), Colors2, GL_STATIC_DRAW);
-	//  The attribute (1 = color) is associated for the shader;
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//	A buffer for the INDICES is created;
-	//glGenBuffers(1, &EboId2);														//  Generating the buffer and assigning its index to the EboId2 variable;
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EboId2);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices2), Indices2, GL_STATIC_DRAW);
-//}
 
 //  Deletes the shader objects after running;
 void DestroyShaders(void)
@@ -373,22 +302,76 @@ void DestroyVBO(void)
 	//  Deleting the buffers for VERTICES (Coordinates + Colors), INDICES;
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDeleteBuffers(1, &VboId);
-	//glDeleteBuffers(1, &ColorBufferId1);
 	glDeleteBuffers(1, &EboId);
-	//glDeleteBuffers(1, &VboId2);
-	//glDeleteBuffers(1, &ColorBufferId2);
-	//glDeleteBuffers(1, &EboId2);
 
 	//  Releasing the VAO objects;
 	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &VaoId);
-	//glDeleteVertexArrays(1, &VaoId2);
 }
 
 //ΦΩΤΟΓΡΑΦΙΕΣ
-void LoadTexture(void) {
+void LoadTexture(const char* texture1, const char* texture2, const char* texture3, const char* texture4) {
 
+	int width, height;
+	unsigned char* image;
 
+	glGenTextures(1, &slowCarTexture);
+	glBindTexture(GL_TEXTURE_2D, slowCarTexture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	image = SOIL_load_image(texture1, &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	SOIL_free_image_data(image);
+
+	glGenTextures(1, &fastCarTexture);
+	glBindTexture(GL_TEXTURE_2D, fastCarTexture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	image = SOIL_load_image(texture2, &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	SOIL_free_image_data(image);
+
+	glGenTextures(1, &oncomingCar1Texture);
+	glBindTexture(GL_TEXTURE_2D, oncomingCar1Texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	image = SOIL_load_image(texture3, &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	SOIL_free_image_data(image);
+
+	glGenTextures(1, &oncomingCar2Texture);
+	glBindTexture(GL_TEXTURE_2D, oncomingCar2Texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	image = SOIL_load_image(texture4, &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	SOIL_free_image_data(image);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 //  The function that releases the resources allocated by the program;
@@ -427,7 +410,7 @@ void Initialize(void)
 	CreateVAO();  // CreateVBO();
 	//CreateVAO2();
 
-	//LoadTexture();
+	LoadTexture("car1.png", "McQueen.png", "car2.png", "car3.png");
 
 	//  Initializing the shaders;
 	CreateShaders();
@@ -440,25 +423,7 @@ void Initialize(void)
 //  The function that draws the graphics on the screen;
 void RenderFunction(void)
 {
-	//or resizeMatrix
 	scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.f / winWidth, 1.f / winHeight, 1.0));
-	
-	//	Passing the uniform variable for the TRANSFORMATION MATRIX to the shaders;
-	//myMatrix = resizeMatrix;
-	//glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
-	//	Drawing the primitives
-
-	//glPointSize(20.0);
-	// The first primitive (the square in shades of blue)
-	//glBindVertexArray(VaoId);                                             // The first VAO is used;
-	//glDrawElements(GL_TRIANGLES, 15, GL_UNSIGNED_INT, (void*)(0));       // The drawing function;
-	// glDrawElements(GL_POINTS, 5, GL_UNSIGNED_INT, (void*)(0));
-
-
-	// The second primitive (the pentagon in shades of gray)
-	//glBindVertexArray(VaoId2);                                             // The second VAO is used;
-	//glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, (void*)(0));       // The drawing function;
-	// glDrawElements(GL_LINE_LOOP, 5, GL_UNSIGNED_INT, (void*)(0));
 	
 	//μετακίνηση του αργού,γρηγορου, αντιθετου αυτοκινήτου 
 	slowCarTranslation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, slowCarsetY, 0.0));
@@ -500,7 +465,7 @@ void RenderFunction(void)
 	glUniform1i(codColLocation, codCol);
 
 	//έξω απο τον δρόμο 
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLfloat)));
 
 	codCol = 1;
 	codColLocation = glGetUniformLocation(ProgramId, "codCol");
@@ -511,9 +476,9 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	// υφή για τα φυτά
-	glActiveTexture(GL_TEXTURE0);
+	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, texture5);
-	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
+	//glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
 	// τα φυτά στον πράσινο χώρο 
 	glDrawElements(GL_QUADS, 48, GL_UNSIGNED_INT, (GLvoid*)(46 * sizeof(GLfloat)));
@@ -522,7 +487,7 @@ void RenderFunction(void)
 
 	//το αργό αυτοκίνητο 
 	glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, slowCarTexture);
+	glBindTexture(GL_TEXTURE_2D, slowCarTexture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
 	myMatrix = scaleMatrix * slowCarTranslation;
@@ -554,7 +519,7 @@ void RenderFunction(void)
 	}
 
 	//το γρήγορο αυτοκίνητο 
-	//glBindTexture(GL_TEXTURE_2D, fastCarTexture);
+	glBindTexture(GL_TEXTURE_2D, fastCarTexture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
 	myMatrix = scaleMatrix * fastCarTranslation* fastCarBackCenter*fastCarRotation* fastCarOrigin;
@@ -562,7 +527,7 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	// Ζωγραφίζει το γρήγορο αυτοκίνητο (4 δείκτες από τη θέση 22).
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(18 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(22 * sizeof(GLfloat)));
 
 
 	//ta 2 αυτοκίνητα αντιθετης κατευθυνσης 
@@ -572,13 +537,13 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	//πρώτο
-	//glBindTexture(GL_TEXTURE_2D, oncomingCar1Texture);
+	glBindTexture(GL_TEXTURE_2D, oncomingCar1Texture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(26 * sizeof(GLfloat)));
 
 	//δευτερο 
-	//glBindTexture(GL_TEXTURE_2D, oncomingCar2Texture);
+	glBindTexture(GL_TEXTURE_2D, oncomingCar2Texture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(30 * sizeof(GLfloat)));
@@ -594,7 +559,7 @@ int main(int argc, char* argv[])
 	//  GLUT and the OpenGL context are initialized, and the window and display mode are configured;
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);					//	Window display mode: a single display buffer and RGB colors are used;
+	glutInitDisplayMode(GLUT_SINGLE| GLUT_RGB);					//	Window display mode: a single display buffer and RGB colors are used;
 	glutInitWindowSize(winWidth, winHeight);						//  Size of the window;
 	glutInitWindowPosition(200, 50);								//  Initial position of the window;
 	glutCreateWindow("Overtaking 2D");		//	Creates the display window, specifying its name;
