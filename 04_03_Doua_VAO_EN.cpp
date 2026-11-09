@@ -74,7 +74,7 @@ float gapBefore = 360.0f;
 float gapAfter = -640.0f;
 
 float fastCarCenterX = 230.0f;
-float fastCarCenterY = -920.0f;
+float fastCarCenterY = -930.0f;
 float fastAngle = 0;
 
 int driving_straight = 1;	// 1= eutheia, 0 = allagh lvridas
@@ -92,11 +92,6 @@ void UpdatePositions() {
 	gapBefore = slowCarMinY - fastCarMaxY;
 	gapAfter = fastCarMinY - slowCarMaxY;
 }
-
-
-
-
-
 
 
 //  Creating and compiling the shader objects;
@@ -250,7 +245,6 @@ void CreateVAO(void)
 		78, 79, 80, 81,
 		82, 83, 84, 85,
 		86, 87, 88, 89,
-		90, 91, 92, 93
 	};
 
 	//  The first VAO (Vertex Array Object) is created / bound;
@@ -324,7 +318,7 @@ void LoadTexture(const char* texture1, const char* texture2, const char* texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	image = SOIL_load_image(texture1, &width, &height, 0, SOIL_LOAD_RGBA);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	SOIL_free_image_data(image);
@@ -338,7 +332,7 @@ void LoadTexture(const char* texture1, const char* texture2, const char* texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	image = SOIL_load_image(texture2, &width, &height, 0, SOIL_LOAD_RGBA);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	SOIL_free_image_data(image);
@@ -352,7 +346,7 @@ void LoadTexture(const char* texture1, const char* texture2, const char* texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	image = SOIL_load_image(texture3, &width, &height, 0, SOIL_LOAD_RGBA);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	SOIL_free_image_data(image);
@@ -366,7 +360,7 @@ void LoadTexture(const char* texture1, const char* texture2, const char* texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	image = SOIL_load_image(texture4, &width, &height, 0, SOIL_LOAD_RGBA);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	SOIL_free_image_data(image);
@@ -396,7 +390,7 @@ void resetOvertaking() {
 	gapAfter = -640.0f;
 
 	fastCarCenterX = 230.0f;
-	fastCarCenterY = -920.0f;
+	fastCarCenterY = -930.0f;
 	fastAngle = 0;
 
 	driving_straight = 1;
@@ -415,7 +409,7 @@ void Initialize(void)
 	//  Initializing the shaders;
 	CreateShaders();
 	//	Instantiating the uniform variables used to "communicate" with the shaders;
-	//myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
+	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
 	//	The "clipped" rectangle;
 	//resizeMatrix = glm::ortho(xMin, xMax, yMin, yMax);
 }
@@ -456,16 +450,16 @@ void RenderFunction(void)
 	// σχεδιάζουμε τον δρόμο 
 	glLineWidth(6.0);
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, 0);
-	glDrawElements(GL_LINES, 4, GL_UNSIGNED_INT, (GLvoid*)(2 * sizeof(GLfloat)));
+	glDrawElements(GL_LINES, 4, GL_UNSIGNED_INT, (GLvoid*)(2 * sizeof(GLuint)));
 	glLineWidth(2.0);
-	glDrawElements(GL_LINES, 12, GL_UNSIGNED_INT, (GLvoid*)(6 * sizeof(GLfloat)));
+	glDrawElements(GL_LINES, 12, GL_UNSIGNED_INT, (GLvoid*)(6 * sizeof(GLuint)));
 	 
 	codCol = 2;
 	codColLocation = glGetUniformLocation(ProgramId, "codCol");
 	glUniform1i(codColLocation, codCol);
 
 	//έξω απο τον δρόμο 
-	glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, (GLvoid*)(38 * sizeof(GLuint)));
 
 	codCol = 1;
 	codColLocation = glGetUniformLocation(ProgramId, "codCol");
@@ -475,15 +469,7 @@ void RenderFunction(void)
 	myMatrixLocation = glGetUniformLocation(ProgramId, "myMatrix");
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
-	// υφή για τα φυτά
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, texture5);
-	//glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
-
-	// τα φυτά στον πράσινο χώρο 
-	glDrawElements(GL_QUADS, 48, GL_UNSIGNED_INT, (GLvoid*)(46 * sizeof(GLfloat)));
-
-	////////
+	
 
 	//το αργό αυτοκίνητο 
 	glActiveTexture(GL_TEXTURE0);
@@ -495,7 +481,7 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	// Ζωγραφίζει το αργό αυτοκίνητο (4 δείκτες από τη θέση 18).
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(18 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(18 * sizeof(GLuint)));
 
 	//προσπέραση 
 	driving_straight = 1;
@@ -527,7 +513,7 @@ void RenderFunction(void)
 	glUniformMatrix4fv(myMatrixLocation, 1, GL_FALSE, &myMatrix[0][0]);
 
 	// Ζωγραφίζει το γρήγορο αυτοκίνητο (4 δείκτες από τη θέση 22).
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(22 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(22 * sizeof(GLuint)));
 
 
 	//ta 2 αυτοκίνητα αντιθετης κατευθυνσης 
@@ -540,13 +526,13 @@ void RenderFunction(void)
 	glBindTexture(GL_TEXTURE_2D, oncomingCar1Texture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(26 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(26 * sizeof(GLuint)));
 
 	//δευτερο 
 	glBindTexture(GL_TEXTURE_2D, oncomingCar2Texture);
 	glUniform1i(glGetUniformLocation(ProgramId, "myTexture"), 0);
 
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(30 * sizeof(GLfloat)));
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, (GLvoid*)(30 * sizeof(GLuint)));
 
 	UpdatePositions();
 	glutSwapBuffers();
@@ -559,7 +545,7 @@ int main(int argc, char* argv[])
 	//  GLUT and the OpenGL context are initialized, and the window and display mode are configured;
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE| GLUT_RGB);					//	Window display mode: a single display buffer and RGB colors are used;
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);					//	Window display mode: a single display buffer and RGB colors are used;
 	glutInitWindowSize(winWidth, winHeight);						//  Size of the window;
 	glutInitWindowPosition(200, 50);								//  Initial position of the window;
 	glutCreateWindow("Overtaking 2D");		//	Creates the display window, specifying its name;
