@@ -513,7 +513,7 @@ int main(int argc, char* argv[])
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);					//	Window display mode: a single display buffer and RGB colors are used;
-	glutInitWindowSize(winWidth, winHeight);						//  Size of the window;
+	glutInitWindowSize(800, 550);						//  Size of the window;
 	glutInitWindowPosition(200, 50);								//  Initial position of the window;
 	glutCreateWindow("Overtaking 2D");		//	Creates the display window, specifying its name;
 
