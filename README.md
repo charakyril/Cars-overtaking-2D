@@ -9,9 +9,9 @@ Shader code is copied from the 04_04_Shader files
 To run the code the Class Graphics GLU Template needs to exist and the appropriate cpp/Shader/Texture files to be imported. 
 
 Files needed:
-- (04_04_Shader_EN.frag)[https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_04_Shader_EN.frag]
-- (04_04_Shader_EN.vert)[https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_04_Shader_EN.vert]
-- (04_03_Doua_VAO_EN.cpp)[https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_03_Doua_VAO_EN.cpp]
+- [04_04_Shader_EN.frag](https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_04_Shader_EN.frag)
+- [04_04_Shader_EN.vert](https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_04_Shader_EN.vert)
+- [04_03_Doua_VAO_EN.cpp](https://github.com/charakyril/Cars-overtaking-2D/blob/main/04_03_Doua_VAO_EN.cpp)
 - cars1,2,3 mcQueen.png
 
 Rest of files are the same as the Template
