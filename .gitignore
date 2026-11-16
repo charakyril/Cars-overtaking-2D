@@ -10,3 +10,6 @@ Release/
 *.obj
 *.ilk
 *.vsidx
+*.docx 
+__*.png
+OpenGL Template GLUT.*
